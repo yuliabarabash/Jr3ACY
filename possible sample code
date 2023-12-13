@@ -1,0 +1,122 @@
+#include <AFMotor.h>
+
+AF_DCMotor motor1(1);  // Motor connected to Motor Controller 1
+AF_DCMotor motor2(2);  // Motor connected to Motor Controller 2
+AF_DCMotor motor3(3);  // Motor connected to Motor Controller 3
+AF_DCMotor motor4(4);  // Motor connected to Motor Controller 4
+
+const int lineArrayPin = A0;        // Analog pin for Sparkfun line follower array
+const int ultrasonicTrigPin = 9;    // Digital pin for ultrasonic sensor trigger
+const int ultrasonicEchoPin = 10;   // Digital pin for ultrasonic sensor echo
+const int stopButtonPin = 2;        // Digital pin for emergency stop button
+const int onOffButtonPin = 3;       // Digital pin for on/off button
+
+const int encoder1Pin = 4;  // Digital pin for encoder 1
+const int encoder2Pin = 5;  // Digital pin for encoder 2
+const int encoder3Pin = 6;  // Digital pin for encoder 3
+const int encoder4Pin = 7;  // Digital pin for encoder 4
+
+volatile long encoder1Count = 0;
+volatile long encoder2Count = 0;
+volatile long encoder3Count = 0;
+volatile long encoder4Count = 0;
+
+bool lineDetected = false;
+bool obstacleDetected = false;
+
+void setup() {
+  // Motor initialization
+  motor1.setSpeed(255);
+  motor2.setSpeed(255);
+  motor3.setSpeed(255);
+  motor4.setSpeed(255);
+
+  // Button setup
+  pinMode(stopButtonPin, INPUT_PULLUP);
+  pinMode(onOffButtonPin, INPUT_PULLUP);
+
+  // Line follower array setup
+  pinMode(lineArrayPin, INPUT);
+
+  // Ultrasonic sensor setup
+  pinMode(ultrasonicTrigPin, OUTPUT);
+  pinMode(ultrasonicEchoPin, INPUT);
+
+  // Encoder setup
+  attachInterrupt(digitalPinToInterrupt(encoder1Pin), updateEncoder1, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(encoder2Pin), updateEncoder2, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(encoder3Pin), updateEncoder3, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(encoder4Pin), updateEncoder4, CHANGE);
+}
+
+void loop() {
+  // Wait for the on/off button to be pressed
+  waitForOnOffButton();
+
+  // Start following the line
+  followLine();
+
+  // Check ultrasonic sensor every 0.5 seconds
+  while (true) {
+    checkUltrasonicSensor();
+    delay(500);
+  }
+}
+
+void followLine() {
+  // Implement your line following logic here
+  // Set motor speeds based on line sensor readings
+  // Update motor speeds regularly to follow the line
+}
+
+void checkUltrasonicSensor() {
+  // Measure distance using the ultrasonic sensor
+  // If obstacle detected, stop and wait for the on/off button
+  if (obstacleDetected) {
+    stopMotors();
+    waitForOnOffButton();
+    obstacleDetected = false;
+  }
+}
+
+void waitForOnOffButton() {
+  // Wait for the on/off button to be pressed
+  while (digitalRead(onOffButtonPin) == HIGH) {
+    // Do nothing
+  }
+
+  // Wait for the on/off button to be released
+  while (digitalRead(onOffButtonPin) == LOW) {
+    // Do nothing
+  }
+
+  delay(1000);  // Debounce delay
+}
+
+void stopMotors() {
+  // Stop all motors
+  motor1.run(RELEASE);
+  motor2.run(RELEASE);
+  motor3.run(RELEASE);
+  motor4.run(RELEASE);
+}
+
+void updateEncoder1() {
+  // Update encoder count for motor 1
+  encoder1Count++;
+}
+
+void updateEncoder2() {
+  // Update encoder count for motor 2
+  encoder2Count++;
+}
+
+void updateEncoder3() {
+  // Update encoder count for motor 3
+  encoder3Count++;
+}
+
+void updateEncoder4() {
+  // Update encoder count for motor 4
+  encoder4Count++;
+}
