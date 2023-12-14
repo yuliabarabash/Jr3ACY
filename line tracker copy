@@ -1,0 +1,36 @@
+#define MOT_RIGHT 1
+#define MOT_LEFT 2
+#define MOT_BACK_RIGHT 3
+#define MOT_BACK_LEFT 4
+
+
+void vMotor_Init(int motor) {
+  // Code to initialize the specified motor
+}
+
+void vMotor_Control(int motor, int speed) {
+  // Code to control the specified motor with the given speed
+}
+
+void setup(){
+  vMotor_Init(MOT_RIGHT);
+  vMotor_Init(MOT_LEFT);
+  vMotor_Init(MOT_BACK_RIGHT);
+  vMotor_Init(MOT_BACK_LEFT);
+}
+
+void loop() {
+  vMotor_Control(MOT_RIGHT, 80);
+  vMotor_Control(MOT_LEFT, 80);
+  vMotor_Control(MOT_BACK_RIGHT, 80);
+  vMotor_Control(MOT_BACK_LEFT, 80);
+
+  delay(5000); // Move straight for 2 seconds
+
+  vMotor_Control(MOT_RIGHT, 0); // Stop the motors
+  vMotor_Control(MOT_LEFT, 0);
+  vMotor_Control(MOT_BACK_RIGHT, 0);
+  vMotor_Control(MOT_BACK_LEFT, 0);
+
+  while(1); // Stop the program execution after one iteration
+}
