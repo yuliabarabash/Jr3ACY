@@ -1,5 +1,4 @@
-// Connect the pins and ultrasonic sensor an test it before introducing it the project.
-
+// NOT GURANTEED TO WORK
 #define MOT_RIGHT 1
 #define MOT_LEFT 2
 #define MOT_BACK_RIGHT 3
