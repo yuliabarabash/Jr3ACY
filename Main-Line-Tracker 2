@@ -3,7 +3,7 @@
 //arduino-cli lib install NewPing
 //arduino-cli lib install Servo
 //arduino-cli lib install Adafruit Motor Shield V2 Library
-// edit the motors to match the stretchers weels. Acurate but time consuming. Ask copilot for help
+// edit the motors to match the stretchers wheels. Acurate but time consuming. Ask copilot for help
 #include <NewPing.h>
 #include <Servo.h>
 #include <AFMotor.h>
